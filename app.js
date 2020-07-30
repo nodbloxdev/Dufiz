@@ -1,6 +1,9 @@
 const { config } = require('dotenv');
 const fs = require('fs');
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, MessageAttachment } = require('discord.js');
+
+const { CanvasSenpai } = require("canvas-senpai")
+const canva = new CanvasSenpai();
 
 
 const client = new Client({
@@ -56,6 +59,24 @@ client.on("message", async message => {
     commandFiles.run(client, message, args);
 
 });
+
+client.on('guildMemberAdd', async member => {
+    const channel = member.guild.channels.cache.find(ch => ch.name === 'welcome');
+    if (!channel) return;
+ 
+   let data = await canva.welcome(member, { link: "https://wallpapercave.com/wp/wp5128415.jpg" })
+ 
+    const attachment = new MessageAttachment(
+      data,
+      "welcome-image.png"
+    );
+ 
+    channel.send(
+      `Welcome to the server, ${member.user.username}!`,
+      attachment
+    );   
+   });
+
 
 
 
