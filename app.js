@@ -1,9 +1,10 @@
-const { config } = require('dotenv');
 const fs = require('fs');
 const { Client, Collection, MessageAttachment } = require('discord.js');
 
 const { CanvasSenpai } = require("canvas-senpai")
 const canva = new CanvasSenpai();
+
+const config = require('./config.json');
 
 
 const client = new Client({
@@ -14,9 +15,6 @@ client.commands = new Collection();
 
 client.aliases = new Collection();
 
-config({
-    path: __dirname + "/.env"
-})
 
 client.once('ready', () => {
 	console.log(`${client.user.username} is now ONLINE.`)
@@ -43,10 +41,10 @@ client.on("message", async message => {
 
     if (message.author.bot) return;
     if (!message.guild) return;
-    if (!message.content.startsWith(process.env.PREFIX)) return;
+    if (!message.content.startsWith(config.PREFIX)) return;
     if (!message.member) message.member = await message.guild.fetchMember(message);
 
-    const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
+    const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
     const cmd = args.shift().toLowerCase();
     
 
@@ -80,4 +78,4 @@ client.on('guildMemberAdd', async member => {
 
 
 
-client.login(process.env.TOKEN)
+client.login(config.TOKEN)
