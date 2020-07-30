@@ -64,7 +64,7 @@ client.on('guildMemberAdd', async member => {
     const channel = member.guild.channels.cache.find(ch => ch.name === 'welcome');
     if (!channel) return;
  
-   let data = await canva.welcome(member, { link: "https://wallpapercave.com/wp/wp5128415.jpg" })
+   let data = await canva.welcome(member, { link: "https://cdn.discordapp.com/attachments/480178644203864085/738184791261839511/idk_lol.png" })
  
     const attachment = new MessageAttachment(
       data,
@@ -72,7 +72,6 @@ client.on('guildMemberAdd', async member => {
     );
  
     channel.send(
-      `Welcome to the server, ${member.user.username}!`,
       attachment
     );   
    });
